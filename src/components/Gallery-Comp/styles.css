@@ -1,0 +1,6 @@
+body {
+  /* background-image: linear-gradient(to bottom right, #E8A0BF, #9ADCFF); */
+  background-image: linear-gradient( #ec9274, #9ADCFF);
+  background-attachment: fixed;
+  font-family: 'Roboto', sans-serif;
+}

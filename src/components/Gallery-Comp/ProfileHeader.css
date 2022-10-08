@@ -1,0 +1,79 @@
+.profile--header{
+    /* background-image: url("../../public/images/bg_img.jpeg");
+    background-size: contain;
+    background-repeat: no-repeat; */
+    background: linear-gradient(to top right, black, #554994);
+    color: azure;
+    overflow: visible;
+    padding:  50px 60px;
+}
+
+.profile--main{
+    display: flex;
+    align-items: center;
+    transform: translateY(40%);
+}
+
+.profile--image{
+    background-color: black;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 4px solid white;
+    border-radius: 4px;
+    box-shadow: 0 0 3px black;
+    transition: 100ms ease;
+}
+
+.profile--links{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile--links>a{
+    text-decoration: none;
+    color: grey;
+    margin: auto 10px;
+}
+
+.profile--links > a:hover{
+    color: black;
+}
+
+.profile--panel{
+    display: flex;
+    justify-content: space-between;
+    background-color: #efefef;
+    padding: 40px 60px;
+}
+
+.profile--msg-btn{
+    border: 2px solid #554994;
+    background-color: transparent;
+    border-radius: 4px;
+    color: #554994;
+    font-weight: 600;
+    padding: 7px 68px;
+    transition: 0.1s ease-in;
+}
+
+.profile--msg-btn:hover{
+    border: 2px solid #554994;
+    background-color: #554994;
+    color: white;
+}
+
+@media only screen and (max-width: 600px) {
+    .profile--links{
+        font-size:medium
+    }
+
+    .profile--main{
+        justify-content: center;
+        transform: translateY(0);
+    }
+
+    .profile--panel{
+        padding: 40px 30px;
+    }
+}

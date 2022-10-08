@@ -1,0 +1,7 @@
+.resources-section {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 100px;
+    margin: 20px;
+    padding: 50px;
+}

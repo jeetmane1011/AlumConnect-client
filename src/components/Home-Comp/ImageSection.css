@@ -1,0 +1,44 @@
+
+.events {
+    background-image: url('../../../public/images/events (1).png');
+    background-position: center;
+
+}
+
+.opportunity{
+    background-image: url('../../../public/images/work.jpg');
+    background-position: center;
+
+}
+
+.gallery{
+    background-image: url('../../../public/images/gallery.jpg');
+    background-position: center;
+
+}
+
+.resources{
+    background-image: url('../../../public/images/books.jpg');
+    background-position: center;
+
+}
+
+
+.back-img {
+    /* background-image: url('../../../public/images/events (1).png'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    height: 300px;
+    box-shadow: inset 0 0 0 1000px rgba(3, 3, 67, 0.62);
+    object-fit: contain;
+}
+
+.back-img > h1 {
+    display: flex;
+    color: aliceblue;
+    font-size: 60px;
+    justify-content: center;
+    align-items:center;
+    padding-top: 120px;
+}

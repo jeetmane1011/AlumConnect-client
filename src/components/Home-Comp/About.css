@@ -1,0 +1,42 @@
+.about-container {
+    padding: 4rem;
+    background: #fff;
+    height: 600px;
+  }
+
+  #about-title {
+    display: inline;
+    text-align: left;
+    font-size: 2.8rem;
+    color: #0d205a;
+    cursor: pointer;
+  }
+
+  #about-title:hover {
+    border-bottom: 5px solid #da6115;
+    font-size: 3rem;
+  }
+
+  #about-heading {
+    display: inline;
+    text-align: left;
+    font-size: 2rem;
+    color: black;
+    border-left: 5px solid #da6115;
+    padding-left: 10px;
+  }
+
+  #about-para {
+    margin-top: 60px;
+    float: left;
+    width:50%;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  #about-img {
+    float: right;
+    height: 500px; 
+    width: 500px;
+    top: 0%;
+  }  

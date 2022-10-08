@@ -1,0 +1,38 @@
+.opp-container {
+    display: flex;
+    flex-flow: row;
+}
+
+.opp-cards-wrapper {
+    display: grid;
+    gap: 100px;
+    grid-template-columns: repeat(2, auto);
+}
+
+.opp-events {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-left: 5px solid #0d205a;
+    padding-left: 30px;
+}
+
+.opp-events-title{
+    display: inline-block;
+    margin: 25px;
+}
+
+.opp-events-title > h1 {
+    font-size: 35px;
+    color: #712f97;
+}
+
+.opp-events-title > h1:hover {
+    border-bottom: 5px solid rgb(132, 25, 75);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.opp-cards-indv {
+    margin: 20px;
+    padding-bottom: 10px;
+}

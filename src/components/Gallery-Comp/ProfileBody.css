@@ -1,0 +1,9 @@
+.profile--body{
+    padding: 50px 50px 0;
+}
+
+.profile--desc{
+    border-radius: 10px;
+    padding: 30px;
+    background-color: #efefef;
+}
