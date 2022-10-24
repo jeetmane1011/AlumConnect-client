@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 
 const ChatContext = createContext();
 
-const ChatProvider = ({ children }) => {
-  const [selectedChat, setSelectedChat] = useState();
+export default function ChatProvider({ children }) {
+  const [selectedChat, setSelectedChat] = useState(false);
   const [user, setUser] = useState();
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setUser(userInfo);
 
-    if (!userInfo) history.push("/");
+    if (!userInfo) navigate("/");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history]);
+  }, [navigate]);
 
   return (
     <ChatContext.Provider
@@ -37,8 +37,7 @@ const ChatProvider = ({ children }) => {
   );
 };
 
-export const ChatState = () => {
+export function ChatState () {
   return useContext(ChatContext);
 };
 
-export default ChatProvider;
