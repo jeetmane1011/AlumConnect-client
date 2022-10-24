@@ -7,7 +7,9 @@ import Footer from '../components/Home-Comp/Footer';
 import ChatSection from '../components/Home-Comp/ChatSection';
 import Discover from '../components/Home-Comp/DiscoverSection';
 
+
 function Home() {
+
   return (
     <>
       <HeroSection />

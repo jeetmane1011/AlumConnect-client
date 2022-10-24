@@ -5,7 +5,7 @@ import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -17,7 +17,8 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     setLoading(true);
     if (!email || !password) {
       toast({
@@ -40,11 +41,12 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "/api/user/login",
+        "/community/user/login",
         { email, password },
         config
       );
       localStorage.setItem("userInfo", JSON.stringify(data));
+
 
       // console.log(JSON.stringify(data));
       toast({
@@ -54,8 +56,8 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
+      navigate("/");
       setLoading(false);
-      navigate("/chats");
     } catch (error) {
       toast({
         title: "Error Occured!",

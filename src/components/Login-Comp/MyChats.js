@@ -15,13 +15,6 @@ const MyChats = ({ fetchAgain }) => {
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const toast = useToast();
-
-  useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
-    fetchChats();
-    // eslint-disable-next-line
-  }, [fetchAgain]);
-
   const fetchChats = async () => {
     // console.log(user._id);
     try {
@@ -30,10 +23,13 @@ const MyChats = ({ fetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-
-      const { data } = await axios.get("/api/chat", config);
+      
+      const { data } = await axios.get("/community/chat", config);
+      console.log(data);
       setChats(data);
+
     } catch (error) {
+      console.log(error.message);
       toast({
         title: "Error Occured!",
         description: "Failed to Load the chats",
@@ -45,6 +41,12 @@ const MyChats = ({ fetchAgain }) => {
     }
   };
 
+  
+  useEffect(() => {
+    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    fetchChats();
+    // eslint-disable-next-line
+  }, [fetchAgain]);
 
   return (
     <Box
@@ -53,7 +55,7 @@ const MyChats = ({ fetchAgain }) => {
       alignItems="center"
       p={3}
       bg="white"
-      w={{ base: "100%", md: "31%" }}
+      w={{ base: "50%", md: "30%" }}
       borderRadius="lg"
       borderWidth="1px"
     >
@@ -102,7 +104,7 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat.isGroupChat
+                  {!chat.isGroupChat 
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>

@@ -13,6 +13,7 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  const user = JSON.parse(localStorage.getItem("userInfo"));
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -98,7 +99,8 @@ function Navbar() {
                 Resources
               </Link>
             </li>
-            {/* <li>
+            {!user &&
+            <li>
               <Link
                 to='/signup'
                 className='nav-links-mobile'
@@ -106,12 +108,12 @@ function Navbar() {
               >
                 Sign Up
               </Link>
-            </li> */}
+            </li>}
           </ul>
-          {/* {button && 
+          {button && 
           <Link to="/signup">
             <Button buttonStyle='btn--outline'>SIGN UP</Button>
-          </Link>} */}
+          </Link>}
         </div>
       </nav>
     </>
