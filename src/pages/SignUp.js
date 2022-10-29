@@ -23,11 +23,11 @@ function SignUp() {
     if (user) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="App">
-        <Container maxW="xl" mt='70px' centerContent>
+        <Container maxW="xl" centerContent>
           <Box
             d="flex"
             justifyContent="center"

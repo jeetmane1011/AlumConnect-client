@@ -3,9 +3,8 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
-import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import {useAuth} from '../../../Context/AuthProvider'
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -15,7 +14,8 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
+  const { login } = useAuth();
+  // const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -31,24 +31,9 @@ const Login = () => {
       setLoading(false);
       return;
     }
-
-    // console.log(email, password);
+    
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      const { data } = await axios.post(
-        "/community/user/login",
-        { email, password },
-        config
-      );
-      localStorage.setItem("userInfo", JSON.stringify(data));
-
-
-      // console.log(JSON.stringify(data));
+      login(email, password);
       toast({
         title: "Login Successful",
         status: "success",
@@ -56,7 +41,6 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      navigate("/");
       setLoading(false);
     } catch (error) {
       toast({

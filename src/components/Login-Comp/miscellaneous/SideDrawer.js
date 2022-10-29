@@ -5,7 +5,7 @@ import { Box, Text } from "@chakra-ui/layout";
 import {
   Menu,
   MenuButton,
-  MenuDivider,
+  // MenuDivider,
   MenuItem,
   MenuList,
 } from "@chakra-ui/menu";
@@ -17,15 +17,13 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/modal";
 import { Tooltip } from "@chakra-ui/tooltip";
-import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { Avatar } from "@chakra-ui/avatar";
-import { useNavigate } from "react-router-dom";
+import { BellIcon } from "@chakra-ui/icons";
+// import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
-import ProfileModal from "./ProfileModal";
 import NotificationBadge from "react-notification-badge";
 import { Effect } from "react-notification-badge";
 import { getSender } from "../../../config/ChatLogics";
@@ -49,13 +47,13 @@ function SideDrawer() {
 
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    localStorage.removeItem("userInfo");
-    setSelectedChat(false);
-    navigate("/");
-  };
+  // const logoutHandler = () => {
+  //   localStorage.removeItem("userInfo");
+  //   setSelectedChat(false);
+  //   navigate("/");
+  // };
 
   const handleSearch = async () => {
     if (!search) {
@@ -169,23 +167,6 @@ function SideDrawer() {
                     : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
               ))}
-            </MenuList>
-          </Menu>
-          <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
-              <Avatar
-                size="sm"
-                cursor="pointer"
-                name={user.name}
-                src={user.pic}
-              />
-            </MenuButton>
-            <MenuList>
-              <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>{" "}
-              </ProfileModal>
-              <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div>

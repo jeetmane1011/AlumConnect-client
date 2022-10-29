@@ -3,15 +3,14 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
-import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useAuth } from '../../../Context/AuthProvider.js';
 
 const Signup = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  const navigate = useNavigate();
+  const { signUp } = useAuth();
 
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -20,7 +19,8 @@ const Signup = () => {
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     setPicLoading(true);
     if (!name || !email || !password || !confirmpassword) {
       toast({
@@ -43,24 +43,9 @@ const Signup = () => {
       });
       return;
     }
-    console.log(name, email, password, pic);
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "/community/user",
-        {
-          name,
-          email,
-          password,
-          pic,
-        },
-        config
-      );
-      console.log(data);
+      signUp(name, email, password, pic);
+      
       toast({
         title: "Registration Successful",
         status: "success",
@@ -68,9 +53,7 @@ const Signup = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
       setPicLoading(false);
-      navigate("/");
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -96,7 +79,6 @@ const Signup = () => {
       });
       return;
     }
-    console.log(pics);
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);

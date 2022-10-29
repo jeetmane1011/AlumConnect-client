@@ -4,16 +4,19 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import './HomeSection.css';
 import { GiCircleClaws } from "react-icons/gi";
+import { ChatState } from "../../Context/ChatProvider.js"
+import ProfileButton from './ProfileButton';
 
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [navbar, setNavbar] = useState(true);
-
+  
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  const user = JSON.parse(localStorage.getItem("userInfo"));
+  const {user} = ChatState();
+
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -99,21 +102,24 @@ function Navbar() {
                 Resources
               </Link>
             </li>
-            {!user &&
             <li>
+            {user && 
               <Link
                 to='/signup'
                 className='nav-links-mobile'
                 onClick={closeMobileMenu}
               >
                 Sign Up
-              </Link>
-            </li>}
+              </Link>}
+            </li>
           </ul>
-          {button && 
+          {button && (!user?
           <Link to="/signup">
-            <Button buttonStyle='btn--outline'>SIGN UP</Button>
-          </Link>}
+            <Button buttonSize="btn--medium" buttonStyle='btn--outline'>Login</Button>
+          </Link>
+          :
+          <ProfileButton user={user}/>
+          )}
         </div>
       </nav>
     </>
