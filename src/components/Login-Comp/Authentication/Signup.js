@@ -43,9 +43,8 @@ const Signup = () => {
       });
       return;
     }
-    try {
-      signUp(name, email, password, pic);
-      
+    
+    signUp(name, email, password, pic).then(()=>{
       toast({
         title: "Registration Successful",
         status: "success",
@@ -54,7 +53,7 @@ const Signup = () => {
         position: "bottom",
       });
       setPicLoading(false);
-    } catch (error) {
+    }).catch (error=>{
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
@@ -64,7 +63,7 @@ const Signup = () => {
         position: "bottom",
       });
       setPicLoading(false);
-    }
+    });
   };
 
   const postDetails = (pics) => {
@@ -82,9 +81,9 @@ const Signup = () => {
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
-      data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "piyushproj");
-      fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+      data.append("upload_preset", "alumConnect");
+      data.append("cloud_name", "jeetmaneproj");
+      fetch("https://api.cloudinary.com/v1_1/jeetmaneproj/image/upload", {
         method: "post",
         body: data,
       })

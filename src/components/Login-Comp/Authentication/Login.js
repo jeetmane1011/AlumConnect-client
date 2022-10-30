@@ -32,8 +32,7 @@ const Login = () => {
       return;
     }
     
-    try {
-      login(email, password);
+    login(email, password).then(()=>{ 
       toast({
         title: "Login Successful",
         status: "success",
@@ -42,7 +41,7 @@ const Login = () => {
         position: "bottom",
       });
       setLoading(false);
-    } catch (error) {
+    }).catch (error=> {
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
@@ -52,8 +51,8 @@ const Login = () => {
         position: "bottom",
       });
       setLoading(false);
-    }
-  };
+    });
+  }
 
   return (
     <VStack spacing="10px">

@@ -19,13 +19,17 @@ export function AuthProvider({ children }) {
   };
 
   async function login (email, password){
-    const { data } = await axios.post("/community/user/login",
-      { email, password },
-      config
-    );
-    localStorage.setItem("userInfo", JSON.stringify(data));
-    setUser(data);
-    navigate("/");
+    try{
+      const { data } = await axios.post("/community/user/login",
+        { email, password },
+        config
+      );
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setUser(data);
+      navigate('/');
+    }catch(err){
+      throw err;
+    }
   }
 
   function logout(){
@@ -35,13 +39,17 @@ export function AuthProvider({ children }) {
   }
 
   async function signUp( name, email, password, pic ){
-    const { data } = await axios.post("/community/user",
-      { name, email, password, pic },
-      config
+    try{
+      const { data } = await axios.post("/community/user",
+        { name, email, password, pic },
+        config
     );
     localStorage.setItem("userInfo", JSON.stringify(data));
     setUser(data);
     navigate("/");
+    }catch(err){
+      throw err;
+    }
   }
 
   return (
