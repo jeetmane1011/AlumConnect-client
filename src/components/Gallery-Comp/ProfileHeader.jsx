@@ -8,7 +8,7 @@ function ProfileHeader(props) {
         <div className='profile--header rounded-top'>
             <div className='profile--main'>
                 <img className='profile--image' src={props.img}/>
-                <div className='px-4'>
+                <div className='px-5'>
                     <h2>{props.name}</h2>
                     <h5>{props.city}</h5>
                 </div>

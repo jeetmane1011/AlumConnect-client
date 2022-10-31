@@ -1,25 +1,32 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProfileCard.css'
+import { useAuth } from '../../Context/AuthProvider';
 
 export default function Card(props){
 
+    const {user} = useAuth();
+
     const navigate = useNavigate();
     const sendData = ()=>{
-        navigate('/Profile',{state: props});
+        navigate(`/profile/${props.id}`);
     }
+    
     const startChat = ()=>{
-        navigate('/chatroom',{state: props});
+        if(user){
+            navigate('/');
+        }else{
+            navigate('/signup');
+        }
     }
 
     return (
             <div className='profile-card'>
                 <img className='profile-img' src={props.img} alt="profile-img" />
-                <h5><strong>{props.name}</strong></h5>
+                <h5><strong>{props.name}</strong> </h5>
                 <h6>{props.worksAs}</h6>
                 <p>{props.worksAt}</p>
                 
-        
                 <div className='d-flex justify-content-center'>
 
                     <button onClick={()=>{sendData()}} className='profile-btn' type='button' >

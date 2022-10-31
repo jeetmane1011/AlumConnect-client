@@ -33,6 +33,7 @@
     border-radius: 6px;
     margin: 5px;
     padding: 1em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: 600;
     font-size:0.7em;
     transition: 150ms ease-in;
@@ -53,6 +54,7 @@
     border-radius: 6px;
     padding: 0.8em;
     margin: 5px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 600;
     font-size:0.8em;
     transition: 150ms ease-in;
@@ -64,11 +66,21 @@
     color: white;
   }
   
+  .profile-card > h5{
+    line-height: 2;
+  }
+
+  .profile-card > h6{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    line-height: 2;
+  }
+
   .profile-card > p{
     flex: 1 0 auto;
     font-weight: 400;
-    font-size: 12px;
-    color: darkgrey;
+    font-size: 13px;
+    color: lightgray;
+    line-height: 2;
   }
   
   .social-links a{

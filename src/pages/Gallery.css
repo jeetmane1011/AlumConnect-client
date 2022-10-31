@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
+
+.gallery-body{
+    background: linear-gradient(to bottom right, #CDDEFF, #E6B2C6);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.no-user{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

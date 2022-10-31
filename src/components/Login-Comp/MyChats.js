@@ -25,7 +25,6 @@ const MyChats = ({ fetchAgain }) => {
       };
       
       const { data } = await axios.get("/community/chat", config);
-      console.log(data);
       setChats(data);
 
     } catch (error) {

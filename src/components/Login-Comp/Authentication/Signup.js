@@ -115,7 +115,7 @@ const Signup = () => {
       <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
-          placeholder="Enter Your Name"
+          placeholder="Enter Your Full Name"
           onChange={(e) => setName(e.target.value)}
         />
       </FormControl>

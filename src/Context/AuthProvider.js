@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
     navigate("/");
   }
 
-  async function signUp( name, email, password, pic ){
+  async function signUp(name, email, password, pic ){
     try{
       const { data } = await axios.post("/community/user",
         { name, email, password, pic },

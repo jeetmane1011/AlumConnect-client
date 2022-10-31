@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
@@ -7,9 +7,10 @@ import Events from './pages/Events';
 import Opportunity from './pages/Opportunity';
 import Resources from './pages/Resources';
 import SignUp from './pages/SignUp';
+import EditProfile from './pages/EditProfile';
 import Community from './pages/Community';
 import ChatProvider from './Context/ChatProvider';
-import Layout from './components/Home-Comp/Layout';
+import Navbar from './components/Home-Comp/Navbar';
 import PrivateRoute from './components/Login-Comp/PrivateRoute';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AuthProvider } from './Context/AuthProvider.js';
@@ -22,18 +23,18 @@ function App(){
       <BrowserRouter>
         <AuthProvider>
           <ChatProvider>
+            <Navbar />
             <Routes>
-              <Route path="/" element={<Layout/>}>
-                <Route index element={<Home />}/>
+                <Route path='/' element={<Home />}/>
                 <Route path='/community' element={<PrivateRoute>
                     <Community />
-                  </PrivateRoute>}/>
-                <Route path='/Profile' element={<Profile />}/>
+                </PrivateRoute>}/>
+                <Route path='/profile/:userid' element={<Profile />}/>
                 <Route path='/events' element={<Events />}/>
                 <Route path='/opportunity' element={<Opportunity />}/>
                 <Route path='/resources' element={<Resources />}/>          
                 <Route path='/gallery' element={<Gallery />}/>
-              </Route>
+                <Route path="/edit/:userid" element={<EditProfile/>}/>
                 <Route path='/signup' element={<SignUp />}/>
             </Routes>
           </ChatProvider>
