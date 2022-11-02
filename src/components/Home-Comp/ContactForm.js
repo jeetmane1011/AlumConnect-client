@@ -28,13 +28,13 @@ const ContactForm = () => {
       target="_blank"
     >
       <div>
-        <input type="text" placeholder="Your name" name="name" required class="contact-input"/>
+        <input type="text" placeholder="Your name" name="name" required className="contact-input"/>
       </div>
       <div>
-        <input type="email" placeholder="Email" name="email" required class="contact-input"/>
+        <input type="email" placeholder="Email" name="email" required className="contact-input"/>
       </div>
       <div>
-        <textarea placeholder="Your message" name="message" required class="contact-input"/>
+        <textarea placeholder="Your message" name="message" required className="contact-input"/>
       </div>
       <div>
         <button type="submit" className="contact-btn"> Send a message </button>

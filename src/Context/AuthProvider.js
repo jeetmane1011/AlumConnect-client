@@ -32,12 +32,6 @@ export function AuthProvider({ children }) {
     }
   }
 
-  function logout(){
-    localStorage.removeItem("userInfo");
-    setUser(null);
-    navigate("/");
-  }
-
   async function signUp(name, email, password, pic ){
     try{
       const { data } = await axios.post("/community/user",
@@ -52,8 +46,27 @@ export function AuthProvider({ children }) {
     }
   }
 
+  function logout(){
+    localStorage.removeItem("userInfo");
+    setUser(null);
+    navigate("/");
+  }
+
+  async function fetchUserDetails(userid, privConfig){
+    try{
+      const {data} = await axios.get(
+        `/community/user/${userid}`,
+        privConfig
+      );
+      return data;
+    }catch(err){
+      navigate("/");
+      throw err;
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{user, setUser, login, logout, signUp}}>
+    <AuthContext.Provider value={{user, setUser, login, logout, signUp, fetchUserDetails}}>
       {children}
     </AuthContext.Provider>
   )

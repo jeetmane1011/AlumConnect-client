@@ -17,7 +17,7 @@ function Footer() {
           <ContactForm />
         </div>
         <div className="location">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15078.756203599194!2d72.8237143!3d19.1212925!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x5767a74a751ccaf9!2sRajiv%20Gandhi%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1664824808169!5m2!1sen!2sin" title="rgit-map" width="600" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15078.756203599194!2d72.8237143!3d19.1212925!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x5767a74a751ccaf9!2sRajiv%20Gandhi%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1664824808169!5m2!1sen!2sin" title="rgit-map" width="600" height="450" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
       <section className='social-media'>

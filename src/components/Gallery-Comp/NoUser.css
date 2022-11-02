@@ -1,5 +1,15 @@
 .user-body{
     display: flex;
     align-items: center;
+    flex-direction: column;
+    gap: 60px;
     justify-content: center;
+}
+
+.user-body h2{    
+    font-size: 40px;
+}
+.user-body i{
+    padding: 60px 0  20px 0;
+    font-size: 120px;
 }

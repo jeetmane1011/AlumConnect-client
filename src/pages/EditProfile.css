@@ -1,0 +1,25 @@
+.edit-card{
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-card::before{
+    content: '';
+    background: linear-gradient(to top right,black, #554994);    position: absolute;
+    display: block;
+    width: 100%;
+    height: 380px;
+    z-index: 0;
+}
+
+.profile--image{
+    background-color: black;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 4px solid white;
+    border-radius: 4px;
+    box-shadow: 0 0 3px black;
+    transition: 100ms ease;
+}
