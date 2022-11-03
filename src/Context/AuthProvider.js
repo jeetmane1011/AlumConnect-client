@@ -17,10 +17,10 @@ export function AuthProvider({ children }) {
       "Content-type": "application/json",
     },
   };
-
+  
   async function login (email, password){
     try{
-      const { data } = await axios.post("/community/user/login",
+      const { data } = await axios.post("/api/user/login",
         { email, password },
         config
       );
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
 
   async function signUp(name, email, password, pic ){
     try{
-      const { data } = await axios.post("/community/user",
+      const { data } = await axios.post("/api/user",
         { name, email, password, pic },
         config
     );
@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
   async function fetchUserDetails(userid, privConfig){
     try{
       const {data} = await axios.get(
-        `/community/user/${userid}`,
+        `/api/user/${userid}`,
         privConfig
       );
       return data;

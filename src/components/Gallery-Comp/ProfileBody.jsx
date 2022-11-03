@@ -7,14 +7,16 @@ function ProfileBody(props) {
       <h3><b>About Me</b></h3>
       <br />
       <div className='profile--desc'>
-        <h6><strong>{props.job}</strong></h6>
+        <div className='d-flex justify-content-between'>
+          <h6><strong>{props.job}</strong></h6>
+          <h2>{props.age}, {props.gender}</h2>
+        </div>
         <p className='lead'>{props.institute}</p>
         <br />
         <hr></hr>
         <br />
         <h6>
           {props.desc}
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad consequuntur culpa perferendis. Ducimus exercitationem perspiciatis hic minima quo dolore earum laboriosam perferendis? Nam reprehenderit vero alias, dignissimos ad quam inventore.
         </h6>
       </div>
     </div>

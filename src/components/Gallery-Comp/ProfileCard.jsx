@@ -14,7 +14,7 @@ export default function Card(props){
     
     const startChat = ()=>{
         if(user){
-            navigate('/');
+            navigate('/community');
         }else{
             navigate('/signup');
         }
@@ -39,12 +39,9 @@ export default function Card(props){
                     
                 </div>
                 <div className='social-links pt-3'>
-                    {/* eslint-disable-next-line */}
-                    <a href="www.google.com" className='fa-brands fa-lg fa-instagram'/>
-                    {/* eslint-disable-next-line */}
-                    <a href="www.google.com" className='fa-brands fa-lg fa-github'/>
-                    {/* eslint-disable-next-line */}
-                    <a href="www.google.com" className='fa-brands fa-lg fa-linkedin'/>
+                    {props.instagram && <a href={props.instagram} target="_blank" className='fa-brands fa-lg fa-instagram'/>}
+                    {props.github && <a href={props.github} target="_blank" className='fa-brands fa-lg fa-github'/>}
+                    {props.linkedin && <a href={props.linkedin} target="_blank" className='fa-brands fa-lg fa-linkedin'/>}
                 </div>
             </div>        
     );

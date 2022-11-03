@@ -9,7 +9,7 @@ function ProfileButton({ user }) {
   return (
     <div className="dropdown">
       <button>
-        <img alt={user.name} src={user.pic} />
+        <img alt={user.name} src={user.pic.url} />
         <i className="fa-solid fa-caret-down fa-xs"></i>
       </button>
       <div className="dropdown-content">

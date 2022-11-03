@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../Context/AuthProvider';
 import axios from 'axios';
@@ -21,34 +21,23 @@ import {
   VStack,
 } from '@chakra-ui/react';
 
-import {  PhoneIcon } from '@chakra-ui/icons'
-
 
 function EditProfile() {
-  const { user, setUser , fetchUserDetails, updateUserDetails} = useAuth();
-  // const [user, setUser] = useState();
-  const [name, setName] = useState(user.name);
+  const { user, setUser , fetchUserDetails} = useAuth();
   const [email, setEmail] = useState(user.email);
+  const [oldDetails, setOldDetails] = useState("");
+  const [updates, setUpdates] = useState({});
+  const [ gender, setGender] = useState("");
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
-  const [desc, setDesc] = useState();
-  const [city, setCity] = useState();
-  const [country, setCountry] = useState();
-  const [gender, setGender] = useState();
-  const [age, setAge] = useState();
-  const [job, setJob] = useState();
-  const [facebook, setFacebook] = useState(); 
-  const [instagrm, setInstagram] = useState();
-  const [linkedin, setLinkedin] = useState();
-  const [github, setGithub] = useState();
-
-  const [pic, setPic] = useState(user.pic);
-  const [institute, setInstitute] = useState();
+  const [image, setImage] = useState("");
+  const [showRemove, setShowRemove] = useState(user.pic.public_id?true:false);
+  const [preview, setPreview] = useState(user.pic.url);
 
   const {userid} = useParams();
-  const [details, setDetails] = useState("");
   const toast= useToast();
   const navigate = useNavigate();
+  const inputRef = useRef(null);
 
   const config = {
     headers: {
@@ -59,7 +48,8 @@ function EditProfile() {
   useEffect(()=>{
     if(user){
       fetchUserDetails(userid, config).then((res)=>{
-        setDetails(res[0]);
+        setOldDetails(res[0]);
+        setGender(oldDetails.gender);
       }).catch(err=>{
         toast({
             title: err.message,
@@ -76,10 +66,18 @@ function EditProfile() {
     // eslint-disable-next-line
   }, []);
 
+  function addUpdates(e){
+    const { name, value } = e.target;
+    setUpdates(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  }
+
   async function editChanges(e){
     e.preventDefault();
-    console.log(name, email, password, confirmpassword, pic, desc, gender, age);
-    const data ={ name, email, password, pic, desc, gender, age};
+    console.log(preview, image, updates);
+    // const data ={ name, email, password, pic, desc, gender, age, city, country, job, institute, facebook, linkedin, instagrm, github};
 
     if (password !== confirmpassword) {
       toast({
@@ -92,19 +90,20 @@ function EditProfile() {
       return;
     }
 
-    if(age < 0 || typeof(age)!=='string'){
-      toast({
-        title: "Enter a valid age !!",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      return;
-    }
+    // if(age < 0 || typeof(age)!=='string'){
+    //   toast({
+    //     title: "Enter a valid age !!",
+    //     status: "warning",
+    //     duration: 5000,
+    //     isClosable: true,
+    //     position: "bottom",
+    //   });
+    //   return;
+    // }
 
-    axios.post(`/community/user/${userid}`,
-    {name, email, password, pic},
+
+    axios.post(`/api/user/${userid}`,
+    updates,
     config
     ).then((res)=>{
       toast({
@@ -115,9 +114,9 @@ function EditProfile() {
         position: "bottom",
       });
       localStorage.setItem("userInfo", JSON.stringify(res.data))
-      console.log(res.data);
       navigate(`/profile/${userid}`);
     }).catch((error)=>{
+      console.log(error);
       toast({
         title: "Error Occured!",
         description: error.message,
@@ -129,7 +128,52 @@ function EditProfile() {
     });
   }
   
+  function handleFileChange(e){
+    const file = e.target.files[0];
+    if(!file){
+      return;
+    }
+    setShowRemove(true);
 
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend=()=>{
+      setPreview(reader.result);
+      setImage(reader.result);
+      setUpdates(prev=>({
+        ...prev,
+        pic:{
+          url: reader.result
+        }
+      }));
+    }
+  }
+
+  const updateImage = (e) => {
+    inputRef.current.click();
+  };
+
+  function removeImage(){
+    setShowRemove(false);
+    setImage(false);
+    //when image is already uploaded do this
+    if(user.pic.public_id){
+      setPreview("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
+      setUpdates(prev=>({
+        ...prev, 
+        pic:{
+          public_id: user.pic.public_id
+        }
+      }));
+    }else{
+      setPreview(user.pic.url);
+      // setUpdates(prev=>({
+      //   ...prev, 
+      //   pic:{}
+      // }));
+      delete updates.pic;
+    }
+  }
 
   return (
     <div className="gallery-body p-5">
@@ -153,8 +197,10 @@ function EditProfile() {
               variant='flushed'
               _placeholder={{ color: 'gray.500' }}
               type="text"
-              defaultValue={details.name}
-              onChange={(e) => setName(e.target.value)}
+              name="name"
+              defaultValue={oldDetails.name}
+              // onChange={(e) => setName(e.target.value)}
+              onChange={addUpdates}
               />
           </FormControl>
           <FormControl id="email" >
@@ -163,9 +209,9 @@ function EditProfile() {
               placeholder="your-email@example.com"
               _placeholder={{ color: 'gray.500' }}
               variant='flushed'
-
+              name="email"
               type="email"
-              defaultValue={details.email}
+              defaultValue={oldDetails.email}
               onChange={(e) => setEmail(e.target.value)}
               />
           </FormControl>
@@ -173,21 +219,24 @@ function EditProfile() {
         <FormControl  id="image">
           <Stack height='full' pb={10} spacing={6}>
             <Center>
-              <img className='profile--image' src="https://bit.ly/sage-adebayo" />
+              <img className='profile--image' src={preview} />
+              {/* {oldDetails.pic.url} */}
             </Center>
-            <Center>
+            <Center>{showRemove &&
               <Button mx={2} bg={'red.400'}
                 color={'white'}
-                onClick={()=>setPic("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")}
+                onClick={removeImage}
                 _hover={{
                   bg: 'red.500',
-                }}>Remove</Button>
+                }}>Remove</Button>}
               <Button mx={2}
-              color='white'
-              bg='blue.400'
-                onClick={(e) => setPic(e.target.value)}
+              // type='button'
+                color='white'
+                bg='blue.400'
+                onClick={updateImage}
               >Change</Button>
             </Center>
+            <input style={{display: 'none'}} accept="image/*" ref={inputRef} type="file" onChange={handleFileChange}/>
             </Stack>
         </FormControl>
         </Stack>
@@ -198,6 +247,7 @@ function EditProfile() {
               placeholder="password"
               _placeholder={{ color: 'gray.500' }}
               type="password"
+              name="password"
               onChange={(e) => setPassword(e.target.value)}
               />
           </FormControl>
@@ -207,7 +257,7 @@ function EditProfile() {
               placeholder="password"
               _placeholder={{ color: 'gray.500' }}
               type="password"
-              onChange={(e) => setConfirmpassword(e.target.value)}
+              onChange={(e) => {setConfirmpassword(e.target.value)}}
               />
           </FormControl>
         </Stack>
@@ -217,13 +267,16 @@ function EditProfile() {
             placeholder='Your Introduction that others can see !!'
             size='sm'
             type="text"
-            // defaultValue={" "}
-            onChange={(e) => setDesc(e.target.value)}
+            name="description"
+            wrap='Soft'
+            defaultValue={oldDetails.description}
+            // onChange={(e) => setDesc(e.target.value)}
+            onChange={addUpdates}
           />
         </FormControl>
         <Divider/>
 
-        {/*       personal details         */}
+        {/*       personal oldDetails         */}
         <Heading lineHeight={1} fontSize={{ base: 'xl', sm: '2xl' }}>Personal Details</Heading>
         <Stack spacing={6} direction={['column', 'row']}>
           <FormControl id="age" >
@@ -232,17 +285,19 @@ function EditProfile() {
               placeholder='Age'
               type="number"
               min="0"
-              onChange={(e) => setAge(e.target.value)}
+              name="age"
+              defaultValue={oldDetails.age}
+              onChange={addUpdates}
             />
           </FormControl>  
           <FormControl id="age" >
             <FormLabel>Gender</FormLabel>
-            <RadioGroup onChange={setGender} value={gender}>
+            <RadioGroup defaultValue={gender}>
               <Stack spacing={5} direction='row'>
-                <Radio value='male'>
+                <Radio onChange={addUpdates} name="gender" value="Male">
                   Male
                 </Radio>
-                <Radio value='female'>
+                <Radio onChange={addUpdates} name="gender" value="Female">
                   Female
                 </Radio>
               </Stack>
@@ -256,21 +311,25 @@ function EditProfile() {
               placeholder="city"
               _placeholder={{ color: 'gray.500' }}
               type="text"
-              onChange={(e) => setCity(e.target.value)}
+              name="city"
+              defaultValue={oldDetails.city}
+              onChange={addUpdates}
               />
           </FormControl>
           <FormControl id="confirm-pass" >
             <FormLabel>Country</FormLabel>
             <Input
               placeholder="country"
+              name="country"
+              defaultValue={oldDetails.country}
               _placeholder={{ color: 'gray.500' }}
               type="text"
-              onChange={(e) => setCountry(e.target.value)}
+              onChange={addUpdates}
               />
           </FormControl>
         </Stack>
         <Divider/>
-        {/*       professional details         */}
+        {/*       professional oldDetails         */}
         <Heading lineHeight={1} fontSize={{ base: 'xl', sm: '2xl' }}>Professional Details</Heading>
         <Stack spacing={6} direction={['column', 'row']}>
           <FormControl id="worksas" >
@@ -279,7 +338,9 @@ function EditProfile() {
                 placeholder="eg. Student/Assistant Developer"
                 _placeholder={{ color: 'gray.500' }}
                 type="text"
-                onChange={(e) => setJob(e.target.value)}
+                name="worksAs"
+                defaultValue={oldDetails.worksAs}
+                onChange={addUpdates}
                 />
             </FormControl>
             <FormControl id="worksat" >
@@ -288,13 +349,15 @@ function EditProfile() {
                 placeholder="Where you work or study"
                 _placeholder={{ color: 'gray.500' }}
                 type="text"
-                onChange={(e) => setInstitute(e.target.value)}
+                name="worksAt"
+                defaultValue={oldDetails.worksAt}
+                onChange={addUpdates}
                 />
             </FormControl>
         </Stack>
         <Divider/>
 
-        {/*       Socials details         */}
+        {/*       Socials oldDetails         */}
         <Heading lineHeight={1} fontSize={{ base: 'xl', sm: '2xl' }}>Socials</Heading>
         <Stack spacing={6} direction={['column', 'row']}>
             <VStack spacing={6} w='full'>
@@ -305,7 +368,9 @@ function EditProfile() {
                   _placeholder={{ color: 'gray.500' }}
                   variant="flushed"
                   type="text"
-                  onChange={(e) => setLinkedin(e.target.value)}
+                  name="instagram"
+                  defaultValue={oldDetails.instagram}
+                  onChange={addUpdates}
                   />
               </InputGroup>
               <InputGroup>
@@ -315,7 +380,9 @@ function EditProfile() {
                   _placeholder={{ color: 'gray.500' }}
                   variant="flushed"
                   type="text"
-                  onChange={(e) => setLinkedin(e.target.value)}
+                  name="linkedin"
+                  defaultValue={oldDetails.linkedin}
+                  onChange={addUpdates}
                 />
               </InputGroup>
             </VStack>
@@ -327,7 +394,9 @@ function EditProfile() {
                   _placeholder={{ color: 'gray.500' }}
                   variant="flushed"
                   type="text"
-                  onChange={(e) => setGithub(e.target.value)}
+                  name="github"
+                  defaultValue={oldDetails.github}
+                  onChange={addUpdates}
                   />
               </InputGroup>
               <InputGroup>
@@ -337,7 +406,9 @@ function EditProfile() {
                   _placeholder={{ color: 'gray.500' }}
                   variant="flushed"
                   type="text"
-                  onChange={(e) => setFacebook(e.target.value)}
+                  name="facebook"
+                  defaultValue={oldDetails.facebook}
+                  onChange={addUpdates}
                 />
               </InputGroup>
             </VStack>

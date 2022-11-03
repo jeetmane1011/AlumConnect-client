@@ -4,7 +4,6 @@ import Header from '../components/Gallery-Comp/ProfileHeader.jsx'
 import Body from '../components/Gallery-Comp/ProfileBody.jsx'
 import Posts from '../components/Gallery-Comp/ProfilePosts.jsx'
 import '../App.css';
-import axios from 'axios';
 import { useAuth } from '../Context/AuthProvider.js';
 import { useToast } from '@chakra-ui/react';
 
@@ -35,7 +34,6 @@ export default function Profile(){
                 });
               })
         }else{
-            console.log(user);
             setUser(localStorage.getItem("userInfo"));
             navigate('/');
         }
@@ -47,14 +45,21 @@ export default function Profile(){
             {details &&  
             <div className='bg-light rounded m-5 shadow'>
                 <Header 
-                    name={details.name} 
-                    img="" 
-                    city="Mumbai, India"
+                    name={details?.name} 
+                    img={details?.pic.url} 
+                    city={details?.city}
+                    country={details?.country}
+                    facebook={details?.facebook}
+                    instagram={details?.instagram}
+                    linkedin={details?.linkedin}
+                    github={details?.github}
                 />
                 <Body
-                job='Student'
-                institute='Rajiv Gandhi Institue of Technology'
-                desc="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                job={details?.worksAs}
+                institute={details?.worksAt}
+                desc={details?.description}
+                gender={details?.gender}
+                age={details?.age}
                 />
                 <Posts />
             </div>

@@ -16,7 +16,7 @@ const Signup = () => {
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
-  const [pic, setPic] = useState();
+  const [pic, setPic] = useState("");
   const [picLoading, setPicLoading] = useState(false);
 
   const submitHandler = async (e) => {
@@ -43,7 +43,9 @@ const Signup = () => {
       });
       return;
     }
-    
+    if(!pic){
+      setPic("");
+    }
     signUp(name, email, password, pic).then(()=>{
       toast({
         title: "Registration Successful",
@@ -66,49 +68,20 @@ const Signup = () => {
     });
   };
 
-  const postDetails = (pics) => {
-    setPicLoading(true);
-    if (pics === undefined) {
-      toast({
-        title: "Please Select an Image!",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      return;
+  function setFileToBase(file){
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend=()=>{
+      setPic(reader.result);
     }
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "alumConnect");
-      data.append("cloud_name", "jeetmaneproj");
-      fetch("https://api.cloudinary.com/v1_1/jeetmaneproj/image/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPic(data.url.toString());
-          console.log(data.url.toString());
-          setPicLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setPicLoading(false);
-        });
-    } else {
-      toast({
-        title: "Please Select an Image!",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      setPicLoading(false);
-      return;
-    }
-  };
+    console.log(reader.result);
+  }
+
+  function handleFileInputChange(e){
+    const file = e.target.files[0];
+    console.log(file);
+    setFileToBase(file);
+  }
 
   return (
     <VStack spacing="5px">
@@ -163,8 +136,10 @@ const Signup = () => {
           type="file"
           p={1.5}
           accept="image/*"
-          onChange={(e) => postDetails(e.target.files[0])}
+          // value={pic}
+          onChange={handleFileInputChange}
         />
+        {pic && <img src={pic} alt="chosen one" style={{height: "200px"}}/>}
       </FormControl>
       <Button
         colorScheme="blue"

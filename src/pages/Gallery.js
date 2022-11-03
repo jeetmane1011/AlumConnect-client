@@ -22,7 +22,7 @@ export default function Gallery(){
                     Authorization: `Bearer ${user.token}`,
                 },
             };
-            axios.get('/community/user', config).then((res)=>{
+            axios.get('/api/user', config).then((res)=>{
                 setResult(res.data);
             }).catch(err=>{
                 console.log(err);
@@ -56,7 +56,7 @@ export default function Gallery(){
                         }
                     }
                     ).slice(0, next).map((card,index) => {
-                        return <Card key={index} img={card.pic} name={card.name} id={card._id} worksAs="Student" worksAt="Rajiv Gandhi Institute of technology"/>
+                        return <Card key={index} img={card.pic.url} name={card.name} id={card._id} worksAs={card.worksAs} worksAt={card.worksAt} facebook={card.facebook} instagram={card.instagram} github={card.github} linkedin={card.linkedin}/>
                     })}
                 </div>
                 <div className='d-flex justify-content-center'>
