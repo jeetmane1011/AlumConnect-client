@@ -316,7 +316,7 @@ function EditProfile() {
               onChange={addUpdates}
               />
           </FormControl>
-          <FormControl id="confirm-pass" >
+          <FormControl id="country" >
             <FormLabel>Country</FormLabel>
             <Input
               placeholder="country"
