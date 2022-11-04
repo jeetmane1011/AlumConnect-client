@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link}  from 'react-router-dom';
-import { ChatState } from "../../Context/ChatProvider.js"
+import { useAuth } from '../../Context/AuthProvider.js';
 import './ProfileButton.css';
 
 function ProfileButton({ user }) {
-  const { logout } = ChatState();
+  const { logout } = useAuth();
 
   return (
     <div className="dropdown">

@@ -32,6 +32,12 @@ export function AuthProvider({ children }) {
     }
   }
 
+  function logout(){
+    localStorage.removeItem("userInfo");
+    setUser(null);
+    navigate("/");
+  }
+
   async function signUp(name, email, password, pic ){
     try{
       const { data } = await axios.post("/api/user",
@@ -44,12 +50,6 @@ export function AuthProvider({ children }) {
     }catch(err){
       throw err;
     }
-  }
-
-  function logout(){
-    localStorage.removeItem("userInfo");
-    setUser(null);
-    navigate("/");
   }
 
   async function fetchUserDetails(userid, privConfig){

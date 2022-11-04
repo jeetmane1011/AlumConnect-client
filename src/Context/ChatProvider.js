@@ -11,13 +11,15 @@ const ChatProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const {user, setUser, logout} = useAuth()
+  const {user, setUser} = useAuth()
+
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo){
       setUser(userInfo);
     }
+    setSelectedChat(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
@@ -33,7 +35,6 @@ const ChatProvider = ({ children }) => {
         setNotification,
         chats,
         setChats,
-        logout
       }}
     >
       {children}
